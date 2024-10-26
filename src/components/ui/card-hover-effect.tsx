@@ -1,40 +1,39 @@
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { Skeleton } from "./skeleton";
 import { useState } from "react";
-
+ 
 export const HoverEffect = ({
   items,
   className,
 }: {
   items: {
-    title: string;
-    description: string;
+    albumCover: string;
+    albumName: string;
+    songName: string;
+    artist: string;
+    duration: string;
+    genre: string;
     link: string;
   }[];
   className?: string;
 }) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
+ 
   return (
-    <div
-      className={cn(
-        "grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3  py-10",
-        className
-      )}
-    >
+    <div className={cn("z-10 max-w-lg mx-auto grid grid-cols-1 gap-4 py-10", className)}>
       {items.map((item, idx) => (
-        <Link
-          href={item?.link}
-          key={item?.link}
-          className="relative group  block p-2 h-full w-full"
+        <div
+          key={`${item.albumName}-${item.songName}`}
+          className="relative group block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-800/[0.8] block  rounded-3xl"
+                className="z-10 absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-800/[0.8] block rounded-3xl"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -49,16 +48,34 @@ export const HoverEffect = ({
             )}
           </AnimatePresence>
           <Card>
-            <CardTitle>{item.title}</CardTitle>
-            <CardDescription>{item.description}</CardDescription>
+            <div className="flex items-start space-x-4">
+              <div className="h-24 w-24 flex-shrink-0">
+                <img
+                  src={item.albumCover}
+                  alt={item.albumName}
+                  className="h-full w-full object-cover rounded-lg"
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <CardTitle>{item.songName}</CardTitle>
+                <div className="mt-1 text-sm text-zinc-400">{item.artist}</div>
+                <div className="mt-2 flex items-center space-x-4 text-xs text-zinc-500">
+                  <span>{item.albumName}</span>
+                  <span>•</span>
+                  <span>{item.genre}</span>
+                  <span>•</span>
+                  <span>{item.duration}</span>
+                </div>
+              </div>
+            </div>
           </Card>
-        </Link>
+        </div>
       ))}
     </div>
   );
 };
 
-export const Card = ({
+const Card = ({
   className,
   children,
 }: {
@@ -78,7 +95,8 @@ export const Card = ({
     </div>
   );
 };
-export const CardTitle = ({
+
+const CardTitle = ({
   className,
   children,
 }: {
@@ -86,26 +104,10 @@ export const CardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn("text-zinc-100 font-bold tracking-wide mt-4", className)}>
+    <h4 className={cn("text-zinc-100 font-bold tracking-wide", className)}>
       {children}
     </h4>
   );
 };
-export const CardDescription = ({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <p
-      className={cn(
-        "mt-8 text-zinc-400 tracking-wide leading-relaxed text-sm",
-        className
-      )}
-    >
-      {children}
-    </p>
-  );
-};
+
+export default HoverEffect;

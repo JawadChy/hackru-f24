@@ -2,6 +2,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Spotlight } from "../components/ui/spotlight";
 import { Music2, Sparkles, Heart } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -26,10 +27,12 @@ export default function Home() {
               perfect soundtrack for every moment.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <button className="group relative flex w-48 items-center justify-center overflow-hidden rounded-full bg-purple-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-purple-400">
-                Start Listening
-                <Heart className="ml-2 h-4 w-4" />
-              </button>
+              <Link href="/listen">
+                <button className="group relative flex w-48 items-center justify-center overflow-hidden rounded-full bg-purple-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-purple-400">
+                  Start Listening
+                  <Heart className="ml-2 h-4 w-4" />
+                </button>
+              </Link>
               <button className="w-48 rounded-full border border-purple-500/30 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-purple-500/10">
                 How it Works
               </button>
