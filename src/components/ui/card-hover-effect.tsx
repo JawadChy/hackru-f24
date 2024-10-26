@@ -1,8 +1,5 @@
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
-import { Skeleton } from "./skeleton";
-import { useState } from "react";
+import Image from "next/image";
  
 export const HoverEffect = ({
   items,
@@ -19,53 +16,35 @@ export const HoverEffect = ({
   }[];
   className?: string;
 }) => {
-  let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
- 
+
   return (
-    <div className={cn("z-10 max-w-lg mx-auto grid grid-cols-1 gap-4 py-10", className)}>
+    <div className={"max-w-lg mx-auto grid grid-cols-1 gap-4 py-10"}>
       {items.map((item, idx) => (
         <div
           key={`${item.albumName}-${item.songName}`}
           className="relative group block h-full w-full"
-          onMouseEnter={() => setHoveredIndex(idx)}
-          onMouseLeave={() => setHoveredIndex(null)}
+
         >
-          <AnimatePresence>
-            {hoveredIndex === idx && (
-              <motion.span
-                className="z-10 absolute inset-0 h-full w-full bg-purple-900 dark:bg-slate-800/[0.8] block rounded-3xl"
-                layoutId="hoverBackground"
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: { duration: 0.15 },
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: { duration: 0.15, delay: 0.2 },
-                }}
-              />
-            )}
-          </AnimatePresence>
+
           <Card>
-            <div className="flex items-start space-x-4">
-              <div className="h-12 w-12 flex-shrink-0">
-                <img
+            <div className="flex items-start space-x-4 justify-center">
+              <div className="h-20 w-20 flex-shrink-0">
+                <Image
                   src={item.albumCover}
+                  width={100}
+                  height={100}
                   alt={item.albumName}
                   className="h-full w-full object-cover rounded-lg"
                 />
               </div>
-              <div className="flex-1 min-w-0 flex">
-                <div>
-                <div className="mt-1 text-xs text-zinc-400">{item.artist}</div>
-                  <CardTitle className="text-lg">{item.songName}</CardTitle>
-                  
+              <div className="flex-1 min-w-0 flex self-center">
+                <div className="flex flex-col justify-center ">
+                  <span className="text-[10px] text-zinc-400 m-0">{item.artist}</span>
+                  <h2 className="text-md text-white m-0">{item.songName}</h2>
+                  <span className="text-[10px] text-zinc-200 m-0">{item.albumName}</span>
                 </div>
-                <div className="mt-2 flex items-center space-x-4 text-xs text-zinc-500">
-                  <span>{item.albumName}</span>
-                  <span>•</span>
-                  <span>{item.genre}</span>
+                <div className="flex items-center space-x-4 px-5 text-xs text-zinc-500">
+                  <p className=" text-xs ">{item.genre}</p>
                   <span>•</span>
                   <span>{item.duration}</span>
                 </div>
@@ -88,11 +67,11 @@ const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full overflow-hidden bg-black border border-transparent dark:border-purple/[0.2] group-hover:border-purple-800 relative z-20",
+        "rounded-2xl h-full w-full overflow-hidden bg-red-500 border border-transparent dark:border-purple/[0.2] group-hover:border-purple-800 relative z-20",
         className
       )}
     >
-      <div className="relative z-50">
+      <div className="relative ">
         <div className="p-4">{children}</div>
       </div>
     </div>

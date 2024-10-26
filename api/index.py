@@ -9,8 +9,8 @@ def camera():
     data = request.get_json()
     if not data or 'image' not in data:
         return jsonify({"error": "Image data is missing"}), 400
-    detector = Detector(emotion_model="svm")
+    # detector = Detector(emotion_model="svm")
     print(data)
-    result = detector.detect_emotion(data['image'])
+    # result = detector.detect_emotion(data['image'])
     result = {"emotion": "happy"}
     return jsonify(result), 200
