@@ -10,6 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        dark: "#000000",
         homer: {color:"#79bccc"},
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
