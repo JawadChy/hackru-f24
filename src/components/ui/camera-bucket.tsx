@@ -16,39 +16,38 @@ export default function CameraBucket({setImage: setImage}: {setImage: (image: st
         }
     };
 
-    return(
-            <button className="absolute top-10 right-10 z-10" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} onClick={takePicture}>
-                <div className={`transition-all duration-300  z-20 rounded-2xl`}>
-                    
-
-                    <div className={`transition-all duration-300 rounded-xl w-[200px] h-[113px] hover:w-[300px] hover:h-[169px]`}>
-                        <div className="h-full flex flex-col bg-gray-900 z-30 flex items-center justify-center">
-                            <CameraIcon className="text-purple-400 h-10 w-10"/>
-                            <div className="text-white text-xs mt-1">Camera problem</div>
-                        </div>
-                        <Camera
-                            ref={camera}
-                            aspectRatio="cover"
-                            facingMode="environment"
-                            errorMessages={{
-                                noCameraAccessible: '',
-                                permissionDenied: '',
-                                switchCamera:'',
-                                canvas: '',
-                            }}
-                        />
-                        <div className={`absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-60 transition-all ${isHovering ? 'opacity-100' : 'opacity-0'}`}>
-                            <CameraIcon className="text-purple-900 h-10 w-10" />
-                        </div>
-                    </div> 
-                    
-                </div>  
-                {isClicked && (
-                <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 mt-2 p-2 bg-purple-500 text-white text-xs rounded-sm">
+    return (
+        <button
+            className={`relative z-30`}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            onClick={takePicture}
+        >
+            <div className={`w-[200px] h-[113px] hover:w-[300px] hover:h-[169px] transition-all duration-300 rounded-2xl`}>
+                <div className={`relative transition-all duration-300 rounded-xl overflow-hidden`}>
+                    <Camera
+                        ref={camera}
+                        aspectRatio={16 / 9}
+                        facingMode="environment"
+                        errorMessages={{
+                            noCameraAccessible: '',
+                            permissionDenied: '',
+                            switchCamera: '',
+                            canvas: '',
+                        }}
+                    />
+                    <div className={`absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-60 transition-opacity duration-300 ${isHovering ? 'opacity-100' : 'opacity-0'}`}>
+                        <CameraIcon className="text-purple-900 h-10 w-10" />
+                    </div>
+                </div>
+            </div>
+            {/* Click feedback */}
+            {isClicked && (
+                <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 mt-2 p-2 bg-purple-500 text-white text-xs rounded-sm z-90">
                     Done!
                 </div>
             )}
-            </button>
-            
-    )
+        </button>
+    );
+    
 }

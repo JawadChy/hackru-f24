@@ -50,9 +50,9 @@ export default function Listen(){
         if(image){
             fetchSongsByEmotions()
         }
-    }, [image,fetchSongsByEmotions])
+    }, [image, fetchSongsByEmotions])
     return(
-        <div>
+        <div className="flex flex-col justify-center items-center p-5">
             <CameraBucket setImage={setImage}/>
             <HoverEffect items={mockData} />
         </div>

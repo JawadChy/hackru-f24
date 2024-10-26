@@ -19,10 +19,10 @@ export const HoverEffect = ({
   }[];
   className?: string;
 }) => {
-  let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
  
   return (
-    <div className={cn("z-10 max-w-lg mx-auto grid grid-cols-1 gap-4 py-10", className)}>
+    <div className={cn("max-w-lg mx-auto grid grid-cols-1 gap-4 py-10", className)}>
       {items.map((item, idx) => (
         <div
           key={`${item.albumName}-${item.songName}`}
@@ -33,7 +33,7 @@ export const HoverEffect = ({
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="z-10 absolute inset-0 h-full w-full bg-purple-900 dark:bg-slate-800/[0.8] block rounded-3xl"
+                className="absolute inset-0 h-full w-full bg-purple-900 dark:bg-slate-800/[0.8] block rounded-3xl"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -92,7 +92,7 @@ const Card = ({
         className
       )}
     >
-      <div className="relative z-50">
+      <div className="relative ">
         <div className="p-4">{children}</div>
       </div>
     </div>
