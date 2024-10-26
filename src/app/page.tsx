@@ -41,8 +41,8 @@ export default function Home() {
                 <div className="text-sm">Songs</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-purple-400">100K+</div>
-                <div className="text-sm">Daily Users</div>
+                <div className="text-2xl font-bold text-purple-400">Spotify</div>
+                <div className="text-sm">Integration</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-purple-400">25+</div>
@@ -52,8 +52,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Background grid animation */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]" />
       </div>
     </main>
   );
