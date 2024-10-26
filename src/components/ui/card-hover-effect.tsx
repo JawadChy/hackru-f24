@@ -26,14 +26,14 @@ export const HoverEffect = ({
       {items.map((item, idx) => (
         <div
           key={`${item.albumName}-${item.songName}`}
-          className="relative group block p-2 h-full w-full"
+          className="relative group block h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="z-10 absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-800/[0.8] block rounded-3xl"
+                className="z-10 absolute inset-0 h-full w-full bg-purple-900 dark:bg-slate-800/[0.8] block rounded-3xl"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -49,16 +49,19 @@ export const HoverEffect = ({
           </AnimatePresence>
           <Card>
             <div className="flex items-start space-x-4">
-              <div className="h-24 w-24 flex-shrink-0">
+              <div className="h-12 w-12 flex-shrink-0">
                 <img
                   src={item.albumCover}
                   alt={item.albumName}
                   className="h-full w-full object-cover rounded-lg"
                 />
               </div>
-              <div className="flex-1 min-w-0">
-                <CardTitle>{item.songName}</CardTitle>
-                <div className="mt-1 text-sm text-zinc-400">{item.artist}</div>
+              <div className="flex-1 min-w-0 flex">
+                <div>
+                <div className="mt-1 text-xs text-zinc-400">{item.artist}</div>
+                  <CardTitle className="text-lg">{item.songName}</CardTitle>
+                  
+                </div>
                 <div className="mt-2 flex items-center space-x-4 text-xs text-zinc-500">
                   <span>{item.albumName}</span>
                   <span>•</span>
@@ -85,7 +88,7 @@ const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden bg-black border border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
+        "rounded-2xl h-full w-full overflow-hidden bg-black border border-transparent dark:border-purple/[0.2] group-hover:border-purple-800 relative z-20",
         className
       )}
     >
