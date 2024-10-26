@@ -3,7 +3,21 @@ import CameraBucket from "@/components/ui/camera-bucket"
 import { useCallback, useEffect, useState } from "react";
 import HoverEffect from "@/components/ui/card-hover-effect";
 
+interface EmotionResponse {
+    success: boolean;
+    faces: Array<{
+        position: { x: number; y: number; width: number; height: number };
+        emotions: Record<string, number>;
+        dominant_emotion: string;
+    }>;
+    annotated_image: string;
+    error?: string;
+}
+
 export default function Listen(){
+
+    const [emotionData, setEmotionData] = useState<EmotionResponse | null>(null);
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
 
     const mockData = [
         {
@@ -25,32 +39,42 @@ export default function Listen(){
             link: "some shit"
         }
     ];
+
+    
     
     const [image, setImage] = useState<string | null>(null);
+
     const fetchSongsByEmotions = useCallback(async () => {
-        try{
+        try {
+            setIsAnalyzing(true);
             const response = await fetch("/api/camera", {
                 method: "POST",
-                body: JSON.stringify({image}),
+                body: JSON.stringify({ image }),
                 headers: {
                     "Content-Type": "application/json"
                 }
-            })
+            });
+            
             if (!response.ok) {
                 throw new Error(`Error: ${response.statusText}`);
             }
     
-            const data = await response.json();
-            console.log(data);
-        }catch(e){
-            console.log(e)
+            const data: EmotionResponse = await response.json();
+            setEmotionData(data);
+            console.log("Emotion data:", data);
+        } catch(e) {
+            console.error(e);
+        } finally {
+            setIsAnalyzing(false);
         }
     }, [image]);
+
     useEffect(() => {
-        if(image){
-            fetchSongsByEmotions()
+        if(image) {
+            fetchSongsByEmotions();
         }
-    }, [image,fetchSongsByEmotions])
+    }, [image, fetchSongsByEmotions]);
+    
     return(
         <div>
             <CameraBucket setImage={setImage}/>
