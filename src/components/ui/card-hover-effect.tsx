@@ -34,10 +34,12 @@ export const HoverEffect: React.FC<HoverEffectProps> = ({ items, loading }) => {
       ):(
         <>
         {!items && (
-          <p className="text-lg text-white justify-center items-center self-center">
-            <ArrowUp className="h-10 w-10 "/>
-            Upload a picture to get song recommendations!
-          </p>
+          <p className="text-lg text-white flex flex-col justify-center items-center">
+          <span className="flex justify-center items-center">
+            <ArrowUp className="h-10 w-10 mb-2" />
+          </span>
+          Upload a picture to get song recommendations!
+        </p>
         )}
         {items && items.length > 0 && (
           <Suspense fallback={<ThreeDots height="80" width="80" color="#2E073F" ariaLabel="loading" />}>

@@ -2,27 +2,27 @@
 import { useCallback, useEffect, useState } from "react";
 import CameraBucket from "@/components/ui/camera-bucket";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
-import { Music2, Camera, Sparkles, BadgeCheck } from "lucide-react";
+import { Music2, Camera, Sparkles, Smile, Frown, Heart, BadgeCheck } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight";
 
-// interface Face {
-//   position: {
-//     x: number;
-//     y: number;
-//     width: number;
-//     height: number;
-//   };
-//   emotions: {
-//     angry: number;
-//     disgust: number;
-//     fear: number;
-//     happy: number;
-//     sad: number;
-//     surprise: number;
-//     neutral: number;
-//   };
-//   dominant_emotion: string;
-// }
+interface Face {
+  position: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  emotions: {
+    angry: number;
+    disgust: number;
+    fear: number;
+    happy: number;
+    sad: number;
+    surprise: number;
+    neutral: number;
+  };
+  dominant_emotion: string;
+}
 
 interface Item {
   spotifyId: string;
@@ -51,12 +51,12 @@ const genres = [
   { id: 'indie', name: 'Indie' },
 ];
 
-// const emotions = [
-//   { id: 'happy', name: 'Happy', icon: Smile },
-//   { id: 'sad', name: 'Sad', icon: Frown },
-//   { id: 'energetic', name: 'Energetic', icon: Music2 },
-//   { id: 'calm', name: 'Calm', icon: Heart },
-// ];
+const emotions = [
+  { id: 'happy', name: 'Happy', icon: Smile },
+  { id: 'sad', name: 'Sad', icon: Frown },
+  { id: 'energetic', name: 'Energetic', icon: Music2 },
+  { id: 'calm', name: 'Calm', icon: Heart },
+];
 
 export default function Listen() {
     const [emotionData, setEmotionData] = useState< Item[] | null>(null);
@@ -119,16 +119,15 @@ export default function Listen() {
                 />
                 <div className="relative z-10 flex w-full flex-col items-center justify-start px-4 pt-10">
                     <div className="animate-fade-in">
-                        <div className="mb-6 flex items-center justify-center space-x-2">
+                        <div className="mb-2 flex items-center justify-center space-x-2">
                             <Camera className="h-6 w-6 text-purple-400" />
                             <Sparkles className="h-4 w-4 text-purple-400" />
                         </div>
-                        <h1 className="bg-gradient-to-b from-purple-50 to-purple-400 bg-clip-text text-center text-4xl font-bold text-transparent mb-4">
+                        <h1 className="bg-gradient-to-b from-purple-50 to-purple-400 bg-clip-text text-center text-4xl font-bold text-transparent mb-1">
                             Capture Your Mood
                         </h1>
                         
-                        {/* Music Preferences Section */}
-                        <div className="w-full max-w-2xl mx-auto mb-8 space-y-6 p-4">
+                        <div className="w-full max-w-2xl mx-auto mb-2 space-y-6 p-4">
                             <div className="space-y-2">
                                 <h3 className="text-lg font-semibold text-purple-200">Select Genres</h3>
                                 <div className="flex flex-wrap gap-1.5 justify-center">
@@ -153,7 +152,7 @@ export default function Listen() {
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
+                            <div className="space-y-2 -mt-10">
                                 <h3 className="text-lg font-semibold text-purple-200">Music Mood</h3>
                                 <div className="flex space-x-3 justify-center">
                                     <button

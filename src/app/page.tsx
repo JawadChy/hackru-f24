@@ -67,9 +67,6 @@ export default function Home() {
                   <Heart className="ml-2 h-4 w-4" />
                 </button>
               </Link>
-              <button className="w-48 rounded-full border border-purple-500/30 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-purple-500/10">
-                How it Works
-              </button>
             </div>
 
             <div className="mt-12 flex items-center justify-center gap-8 text-neutral-300">
@@ -82,7 +79,7 @@ export default function Home() {
                 <div className="text-sm">Integration</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-purple-400">25+</div>
+                <div className="text-2xl font-bold text-purple-400">6+</div>
                 <div className="text-sm">Mood Categories</div>
               </div>
             </div>
