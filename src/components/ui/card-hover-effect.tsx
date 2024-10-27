@@ -19,7 +19,7 @@ export const HoverEffect: React.FC<HoverEffectProps> = ({ items }) => {
     </>);
   }
   return (
-    <div className={cn("flex flex-col items-center justify-center w-full", className)}>
+    <div className={cn("flex flex-col items-center justify-center w-full", )}>
       <h1 className="mt-12 text-3xl font-bold mb-2 bg-gradient-to-r from-purple-200 via-purple-400 to-purple-200 bg-clip-text text-transparent">
         Recommended Songs
       </h1>

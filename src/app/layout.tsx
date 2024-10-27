@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import {Gamja_Flower, Merriweather}  from "next/font/google"
+import { Gamja_Flower, Merriweather } from "next/font/google"
 import "./globals.css";
 
 const geistSans = localFont({
@@ -41,8 +41,7 @@ export default function RootLayout({
       <body
         className={`bg-black bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] ${geistSans.variable} ${geistMono.variable}  ${merriweather.className} antialiased`}
       >
-          {children}
-          
+        {children}
       </body>
     </html>
   );
