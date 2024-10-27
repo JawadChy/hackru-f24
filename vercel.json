@@ -1,0 +1,16 @@
+{
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/next",
+        "config": {
+          "installCommand": "pip install deepface && npm install"
+        }
+      }
+    ],
+    "build": {
+      "env": {
+        "PYTHONPATH": "/vercel/path0"
+      }
+    }
+  }
