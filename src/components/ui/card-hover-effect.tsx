@@ -10,7 +10,7 @@ interface HoverEffectProps {
 
 export const HoverEffect: React.FC<HoverEffectProps> = ({ items }) => {
   return (
-    <div className={`mt-12 max-w-lg mx-auto z-50 grid grid-cols-1`}>
+    <div className={`mt-12   z-50 grid grid-cols-1`}>
       {items.map((item, idx) => (
         <motion.iframe 
           key={idx} 
@@ -23,6 +23,12 @@ export const HoverEffect: React.FC<HoverEffectProps> = ({ items }) => {
           initial={{ opacity: 0, y: 200 }} 
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: idx * 0.5 }}
+          whileHover={{
+            scale: 1.05, 
+            boxShadow: "20px 10px 40px rgba(128, 0, 128, 0.5)",
+            zIndex: 10,
+            transition: { duration: 0.3 },
+          }}
         ></motion.iframe>
       ))}
     </div>
