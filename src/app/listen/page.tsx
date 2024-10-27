@@ -94,13 +94,13 @@ export default function Listen() {
                             <CameraBucket setImage={setImage} />
                         </div>
 
-                        {isAnalyzing && (
+                        {/* {isAnalyzing && (
                             <div className="text-center mt-4">
                                 <p className="text-purple-400 animate-pulse">
                                     Analyzing your emotions...
                                 </p>
                             </div>
-                        )}
+                        )} */}
 
                         {/* {emotionData?.faces && emotionData.faces.length > 0 && (
                             <div className="mt-8 text-center">
@@ -114,7 +114,7 @@ export default function Listen() {
                         )} */}
 
                         <div className="mt-8 w-full">
-                            <HoverEffect items={mockData} />
+                            <HoverEffect items={emotionData} />
                         </div>
                     </div>
                 </div>

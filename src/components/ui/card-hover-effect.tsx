@@ -7,7 +7,7 @@ interface Item {
 }
 
 interface HoverEffectProps {
-  items: Item[];
+  items: Item[] | null;
   className?: string;
 }
 
