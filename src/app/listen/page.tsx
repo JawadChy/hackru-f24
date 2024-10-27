@@ -35,11 +35,12 @@ interface EmotionResponse {
 
 export default function Listen() {
     const [emotionData, setEmotionData] = useState< Item[] | null>(null);
-    
+    const [loading, setLoading] = useState<boolean>(false);
     const [image, setImage] = useState<string | null>(null);
 
     const fetchSongsByEmotions = useCallback(async () => {
         try {
+            setLoading(true);
             const response = await fetch("/api/camera", {
                 method: "POST",
                 body: JSON.stringify({ image }),
@@ -53,6 +54,7 @@ export default function Listen() {
     
             const data: EmotionResponse = await response.json();
             setEmotionData(data);
+            setLoading(false);
             
             if (data.faces && data.faces.length > 0) {
                 data.faces.forEach((face, index) => {
@@ -114,7 +116,7 @@ export default function Listen() {
                         )} */}
 
                         <div className="mt-8 w-full">
-                            <HoverEffect items={emotionData} />
+                            <HoverEffect items={emotionData} loading={loading}/>
                         </div>
                     </div>
                 </div>
