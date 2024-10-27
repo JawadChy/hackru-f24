@@ -1,8 +1,7 @@
 import React from "react";
 import { Spotlight } from "../components/ui/spotlight";
-import { Music2, Sparkles, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Home() {
   return (
