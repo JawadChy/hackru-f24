@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Gamja_Flower, Merriweather } from "next/font/google"
 import "./globals.css";
@@ -26,6 +25,7 @@ const gamjaFlower = Gamja_Flower({
   display: 'swap',
   variable: '--font-gamja-flower',
 });
+
 export const metadata = {
   title: "Feelin It - Get Songs for Your Mood",
   description: "With Feelin It, you can get songs for your mood. Just upload a picture and get song recommendations based on your mood.",
