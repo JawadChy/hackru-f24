@@ -13,9 +13,12 @@ export default function Home() {
         />
         <div className="relative z-10 flex w-full max-w-7xl flex-col items-center justify-center px-4">
           <div className="animate-fade-in">
-            <div className="mb-6 flex items-center justify-center space-x-2">
-              <Music2 className="h-12 w-12 text-purple-400" />
-              <Sparkles className="h-8 w-8 text-purple-400" />
+            <div className="mb-6 flex items-center justify-center space-x-2 ">
+              <Music2 className="h-32 w-32 text-purple-400" />
+              <div >
+                <Sparkles className="h-8 w-8 text-purple-400"/>
+                <Sparkles className="h-8 w-8 text-purple-400 pr-5" />
+              </div>
             </div>
             <h1 className="bg-gradient-to-b from-purple-50 to-purple-400 bg-clip-text py-4 text-center text-4xl font-bold text-transparent md:text-7xl">
               Music that matches <br /> your mood

@@ -131,7 +131,7 @@ export default function Listen() {
                         <div className="w-full max-w-2xl mx-auto mb-8 space-y-6 p-4">
                             <div className="space-y-2">
                                 <h3 className="text-lg font-semibold text-purple-200">Select Genres</h3>
-                                <div className="flex flex-wrap gap-2">
+                                <div className="flex flex-wrap gap-1.5 justify-center">
                                     {genres.map((genre) => (
                                         <button
                                             key={genre.id}
@@ -141,7 +141,7 @@ export default function Listen() {
                                                     ? prev.genres.filter(g => g !== genre.id)
                                                     : [...prev.genres, genre.id]
                                             }))}
-                                            className={`px-4 py-2 rounded-full text-sm transition-all ${
+                                            className={`px-4 py-1 rounded-lg text-sm transition-all hover:px-5 duration-300  ${
                                                 preferences.genres.includes(genre.id)
                                                     ? 'bg-purple-500 text-white'
                                                     : 'bg-purple-500/20 text-purple-200 hover:bg-purple-500/30'
@@ -155,21 +155,21 @@ export default function Listen() {
 
                             <div className="space-y-2">
                                 <h3 className="text-lg font-semibold text-purple-200">Music Mood</h3>
-                                <div className="flex flex-col space-y-2">
+                                <div className="flex space-x-3 justify-center">
                                     <button
                                         onClick={() => setPreferences(prev => ({
                                             ...prev,
                                             moodPreference: 'complement',
                                             targetEmotion: null
                                         }))}
-                                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+                                        className={`flex items-center space-x-2 px-3 py-2 hover:px-4 rounded-lg transition-all duration-300 ${
                                             preferences.moodPreference === 'complement'
                                                 ? 'bg-purple-500 text-white'
                                                 : 'bg-purple-500/20 text-purple-200 hover:bg-purple-500/30'
                                         }`}
                                     >
                                         <BadgeCheck className="w-5 h-5" />
-                                        <span>Balance my mood (recommend opposite)</span>
+                                        <span>Balance mood</span>
                                     </button>
                                     <button
                                         onClick={() => setPreferences(prev => ({
@@ -177,14 +177,14 @@ export default function Listen() {
                                             moodPreference: 'enhance',
                                             targetEmotion: null
                                         }))}
-                                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+                                        className={`flex items-center space-x-2 px-4 py-2 hover:px-5 rounded-lg transition-all ${
                                             preferences.moodPreference === 'enhance'
                                                 ? 'bg-purple-500 text-white'
                                                 : 'bg-purple-500/20 text-purple-200 hover:bg-purple-500/30'
                                         }`}
                                     >
                                         <Music2 className="w-5 h-5" />
-                                        <span>Enhance my current mood</span>
+                                        <span>Match mood</span>
                                     </button>
                                 </div>
                             </div>
