@@ -1,5 +1,4 @@
 import React from "react";
-import { cn } from "@/lib/utils";
 import { Spotlight } from "../components/ui/spotlight";
 import { Music2, Sparkles, Heart } from "lucide-react";
 import Link from "next/link";
@@ -54,7 +53,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
       </div>
     </main>
   );

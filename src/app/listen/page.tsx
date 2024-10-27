@@ -1,19 +1,8 @@
 'use client';
 import CameraBucket from "@/components/ui/camera-bucket"
 import { useCallback, useEffect, useState } from "react";
-import HoverEffect from "@/components/ui/card-hover-effect";
-
-interface EmotionResponse {
-    success: boolean;
-    faces: Array<{
-        position: { x: number; y: number; width: number; height: number };
-        emotions: Record<string, number>;
-        dominant_emotion: string;
-    }>;
-    annotated_image: string;
-    error?: string;
-}
-
+import { HoverEffect } from "@/components/ui/card-hover-effect";
+import { ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
 export default function Listen(){
 
     const [emotionData, setEmotionData] = useState<EmotionResponse | null>(null);
@@ -21,26 +10,12 @@ export default function Listen(){
 
     const mockData = [
         {
-            albumCover: "https://upload.wikimedia.org/wikipedia/en/thumb/9/90/TheMelodicBlueCover.jpeg/220px-TheMelodicBlueCover.jpeg",
-            albumName: "The Melodic Blue",
-            songName: "Family Ties",
-            artist: "Baby Keem",
-            genre: "Rap",
-            duration: "3:45",
-            link: "some shit"
+            spotifyId: "3CmHvyZQQAGkKkTjTBFWN6"
         },
         {
-            albumCover: "https://upload.wikimedia.org/wikipedia/en/thumb/9/90/TheMelodicBlueCover.jpeg/220px-TheMelodicBlueCover.jpeg",
-            albumName: "The Melodic Blue",
-            songName: "Orange Soda",
-            artist: "Baby Keem",
-            genre: "Rap",
-            duration: "2:56",
-            link: "some shit"
+          spotifyId: "7CyPwkp0oE8Ro9Dd5CUDjW"
         }
-    ];
-
-    
+      ];
     
     const [image, setImage] = useState<string | null>(null);
 
@@ -76,8 +51,18 @@ export default function Listen(){
     }, [image, fetchSongsByEmotions]);
     
     return(
-        <div className="flex flex-col justify-center items-center p-5">
+        <div className="flex flex-col w-full justify-center items-center p-5">
             <CameraBucket setImage={setImage}/>
+            <div className="absolute top-32 right-72 z-20 flex  flex-col -rotate-[32deg] items-center">
+          <ArrowTrendingUpIcon
+            className={`text-white h-5 w-5 w-full transform -rotate-[80deg]`}
+          />
+          <span
+            className={`text-center text-sm toon m-0  w-full leading-tight text-white`}
+          >
+            Take pic!
+          </span>
+        </div>
             <HoverEffect items={mockData} />
         </div>
     )

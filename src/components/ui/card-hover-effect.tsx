@@ -1,95 +1,36 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
- 
-export const HoverEffect = ({
-  items,
-  className,
-}: {
-  items: {
-    albumCover: string;
-    albumName: string;
-    songName: string;
-    artist: string;
-    duration: string;
-    genre: string;
-    link: string;
-  }[];
-  className?: string;
-}) => {
+import { motion } from "framer-motion";
 
+interface Item {
+  spotifyId: string;
+}
+
+interface HoverEffectProps {
+  items: Item[];
+}
+
+export const HoverEffect: React.FC<HoverEffectProps> = ({ items }) => {
   return (
-    <div className={"max-w-lg mx-auto grid grid-cols-1 gap-4 py-10"}>
+    <div className={`mt-12   z-50 grid grid-cols-1`}>
       {items.map((item, idx) => (
-        <div
-          key={`${item.albumName}-${item.songName}`}
-          className="relative group block h-full w-full"
-
-        >
-
-          <Card>
-            <div className="flex items-start space-x-4 justify-center">
-              <div className="h-20 w-20 flex-shrink-0">
-                <Image
-                  src={item.albumCover}
-                  width={100}
-                  height={100}
-                  alt={item.albumName}
-                  className="h-full w-full object-cover rounded-lg"
-                />
-              </div>
-              <div className="flex-1 min-w-0 flex self-center">
-                <div className="flex flex-col justify-center ">
-                  <span className="text-[10px] text-zinc-400 m-0">{item.artist}</span>
-                  <h2 className="text-md text-white m-0">{item.songName}</h2>
-                  <span className="text-[10px] text-zinc-200 m-0">{item.albumName}</span>
-                </div>
-                <div className="flex items-center space-x-4 px-5 text-xs text-zinc-500">
-                  <p className=" text-xs ">{item.genre}</p>
-                  <span>•</span>
-                  <span>{item.duration}</span>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
+        <motion.iframe 
+          key={idx} 
+          allowFullScreen={true} 
+          src={`https://open.spotify.com/embed/track/${item.spotifyId}?utm_source=generator&theme=0`} 
+          width="450" 
+          height="90"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+          loading="lazy"
+          initial={{ opacity: 0, y: 200 }} 
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut", delay: idx * 0.5 }}
+          whileHover={{
+            scale: 1.05, 
+            boxShadow: "20px 10px 40px rgba(128, 0, 128, 0.5)",
+            zIndex: 10,
+            transition: { duration: 0.3 },
+          }}
+        ></motion.iframe>
       ))}
     </div>
   );
 };
-
-const Card = ({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <div
-      className={cn(
-        "rounded-2xl h-full w-full overflow-hidden bg-red-500 border border-transparent dark:border-purple/[0.2] group-hover:border-purple-800 relative z-20",
-        className
-      )}
-    >
-      <div className="relative ">
-        <div className="p-4">{children}</div>
-      </div>
-    </div>
-  );
-};
-
-const CardTitle = ({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <h4 className={cn("text-zinc-100 font-bold tracking-wide", className)}>
-      {children}
-    </h4>
-  );
-};
-
-export default HoverEffect;

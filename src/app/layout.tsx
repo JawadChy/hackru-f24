@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import {Merriweather}  from "next/font/google"
+import {Gamja_Flower, Merriweather}  from "next/font/google"
 import "./globals.css";
 
 const geistSans = localFont({
@@ -19,6 +19,12 @@ const merriweather = Merriweather({
   style: ['normal', 'italic'],
   display: 'swap',
 });
+const gamjaFlower = Gamja_Flower({
+  subsets: ['latin'],
+  weight: ['400'],
+  display: 'swap',
+  variable: '--font-gamja-flower',
+});
 export const metadata: Metadata = {
   title: "Music",
   description: "best music app oat",
@@ -32,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable}  ${merriweather.className} antialiased`}
+        className={`${gamjaFlower.className} ${geistSans.variable} ${geistMono.variable}  ${merriweather.className} antialiased`}
       >
         {children}
                 {/* Background grid animation */}
