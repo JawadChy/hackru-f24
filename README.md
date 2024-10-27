@@ -6,7 +6,7 @@ We do all the work for you to get you the best songs to fit your mood, all you h
 
 <p align="center">
   <a href="" target="_blank">
-  <img src="./public/icon.png" width="300" height="300" alt="Feelin it Logo" />
+  <img src="./public/icon.svg" width="300" height="300" alt="Feelin it Logo" />
   </a>
 </p>
 
