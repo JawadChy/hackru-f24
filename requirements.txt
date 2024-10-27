@@ -1,6 +1,5 @@
 Flask==3.0.3
 flask_cors==5.0.0
-py-feat==0.6.2
 opencv-python
 deepface
 tf_keras
