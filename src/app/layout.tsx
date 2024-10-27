@@ -26,9 +26,25 @@ const gamjaFlower = Gamja_Flower({
   display: 'swap',
   variable: '--font-gamja-flower',
 });
-export const metadata: Metadata = {
-  title: "Music",
-  description: "best music app oat",
+export const metadata = {
+  title: "Feelin It - Get Songs for Your Mood",
+  description: "With Feelin It, you can get songs for your mood. Just upload a picture and get song recommendations based on your mood.",
+  keywords: "Feelin It, Songs, Mood, Music, Recommendations, AI, Spotify",
+  author: "Feelin It Team",
+  robots: "index, follow",
+  "og:title": "Feelin It - Get Songs for Your Mood",
+  "og:description": "With Feelin It, you can get songs for your mood. Just upload a picture and get song recommendations based on your mood.",
+  "og:type": "website",
+  applicationName: "Feelin It",
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { rel: "icon", type: "image/png", sizes: "32x32", url: "/favicon-32x32.png" },
+      { rel: "icon", type: "image/svg+xml", url: "/favicon.svg" },
+    ],
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
