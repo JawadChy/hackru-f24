@@ -4,7 +4,6 @@ opencv-python
 deepface
 python-dotenv
 tensorflow
-tensorflow_intel==2.18.0
 termcolor==2.5.0
 tf_keras==2.18.0
 tqdm==4.66.5
