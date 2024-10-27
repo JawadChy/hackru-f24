@@ -43,7 +43,7 @@ def analyze_image_from_url(image_url):
             })
 
         # Save the annotated image
-        cv2.imwrite('analyzed_image.jpg', frame)
+        cv2.imwrite('analyzed_image2.jpg', frame)
         
         return results
 
@@ -52,7 +52,7 @@ def analyze_image_from_url(image_url):
 
 # Test the function with your image URL
 if __name__ == "__main__":
-    image_url = "https://www.shutterstock.com/image-photo/portrait-sad-man-260nw-126009806.jpg"  # Replace with your image URL
+    image_url = "https://img.freepik.com/free-photo/close-up-beautiful-woman-face-with-natural-makeup-relaxed-expression-standing-beige-backgr_1258-64561.jpg" 
     results = analyze_image_from_url(image_url)
     
     if isinstance(results, list):
