@@ -59,7 +59,8 @@ const emotions = [
 ];
 
 export default function Listen() {
-    const [emotionData, setEmotionData] = useState<Item[] | null>(null);
+    const [emotionData, setEmotionData] = useState< Item[] | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
     const [image, setImage] = useState<string | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [preferences, setPreferences] = useState<MusicPreferences>({
@@ -70,7 +71,7 @@ export default function Listen() {
 
     const fetchSongsByEmotions = useCallback(async () => {
         try {
-            setIsAnalyzing(true);
+            setLoading(true);
             const response = await fetch("/api/camera", {
                 method: "POST",
                 body: JSON.stringify({ 
@@ -87,7 +88,14 @@ export default function Listen() {
             }
     
             const data: EmotionResponse = await response.json();
-            setEmotionData(data);
+            setEmotionData(data.results);
+            setLoading(false);
+            
+            if (data.results && data.results.length > 0) {
+                console.log('Songs fetched based on emotions:', data.results);
+            } else {
+                console.log('No songs found for the given emotions');
+            }
         } catch(e) {
             console.error('Error analyzing emotions:', e);
             setEmotionData(null);
@@ -219,7 +227,7 @@ export default function Listen() {
                         )}
 
                         <div className="mt-8 w-full">
-                            <HoverEffect items={emotionData || []} isLoading={isAnalyzing} />
+                            <HoverEffect items={emotionData} loading={loading}/>
                         </div>
                     </div>
                 </div>
