@@ -4,14 +4,12 @@ import logging
 import socket
 from utils import get_emotion_from_picture, get_access_token
 import requests
-import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
-
 
 def is_port_in_use(port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -21,9 +19,141 @@ def is_port_in_use(port):
         except socket.error:
             return True
 
-
-SPOTIFY_API_URL = 'https://api.spotify.com/v1/search'
+# Spotify API endpoints
+SPOTIFY_SEARCH_URL = 'https://api.spotify.com/v1/search'
+SPOTIFY_RECOMMENDATIONS_URL = 'https://api.spotify.com/v1/recommendations'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'
+
+# Emotion profiles for Spotify recommendations
+EMOTION_PROFILES = {
+    'happy': {
+        'min_valence': 0.6,
+        'target_valence': 0.8,
+        'min_energy': 0.5,
+        'target_energy': 0.7,
+        'target_danceability': 0.7,
+        'max_instrumentalness': 0.3
+    },
+    'sad': {
+        'max_valence': 0.4,
+        'target_valence': 0.3,
+        'max_energy': 0.5,
+        'target_energy': 0.4,
+        'target_danceability': 0.4,
+        'min_acousticness': 0.4
+    },
+    'angry': {
+        'min_energy': 0.7,
+        'target_energy': 0.8,
+        'max_valence': 0.4,
+        'target_valence': 0.3,
+        'min_tempo': 120,
+        'target_loudness': -5
+    },
+    'neutral': {
+        'target_valence': 0.5,
+        'target_energy': 0.5,
+        'target_danceability': 0.5
+    },
+    'surprise': {
+        'min_energy': 0.6,
+        'target_energy': 0.7,
+        'target_valence': 0.7,
+        'min_danceability': 0.5
+    },
+    'fear': {
+        'max_valence': 0.3,
+        'target_energy': 0.7,
+        'min_instrumentalness': 0.4,
+        'target_tempo': 140
+    },
+    'disgust': {
+        'max_valence': 0.3,
+        'target_energy': 0.6,
+        'min_instrumentalness': 0.3,
+        'target_mode': 0
+    }
+}
+
+def get_seed_data(emotion, access_token):
+    """Get seed tracks and artists based on emotion."""
+    try:
+        response = requests.get(
+            SPOTIFY_SEARCH_URL,
+            params={
+                'q': emotion,
+                'type': 'track,artist',
+                'limit': 10
+            },
+            headers={'Authorization': f'Bearer {access_token}'}
+        )
+        response.raise_for_status()
+        
+        data = response.json()
+        return {
+            'tracks': [track['id'] for track in data.get('tracks', {}).get('items', [])],
+            'artists': [artist['id'] for artist in data.get('artists', {}).get('items', [])]
+        }
+    except Exception as e:
+        logger.error(f"Failed to get seed data: {str(e)}")
+        return {'tracks': [], 'artists': []}
+
+def get_recommendations(emotion, preferences, access_token):
+    """Get song recommendations based on emotion and user preferences."""
+    try:
+        # Get base profile for detected emotion
+        profile = EMOTION_PROFILES.get(emotion, EMOTION_PROFILES['neutral']).copy()
+        
+        # Adjust profile based on preference
+        if preferences.get('moodPreference') == 'complement':
+            # Invert the emotional characteristics
+            if 'min_valence' in profile:
+                profile['min_valence'] = 1 - profile.get('max_valence', 1)
+            if 'max_valence' in profile:
+                profile['max_valence'] = 1 - profile.get('min_valence', 0)
+            if 'target_valence' in profile:
+                profile['target_valence'] = 1 - profile['target_valence']
+            if 'target_energy' in profile:
+                profile['target_energy'] = 1 - profile['target_energy']
+                
+        elif preferences.get('moodPreference') == 'specific' and preferences.get('targetEmotion'):
+            profile = EMOTION_PROFILES.get(preferences['targetEmotion'], profile)
+
+        # Get seed tracks and artists
+        seed_data = get_seed_data(emotion, access_token)
+        
+        # Build recommendation parameters
+        params = {
+            'limit': 10,
+            'market': 'US',
+            'min_popularity': 20,
+            **profile
+        }
+
+        # Add seeds (maximum 5 total)
+        if seed_data['tracks']:
+            params['seed_tracks'] = ','.join(seed_data['tracks'][:2])
+        if seed_data['artists']:
+            params['seed_artists'] = ','.join(seed_data['artists'][:1])
+        
+        # Add genres if specified
+        if preferences.get('genres'):
+            params['seed_genres'] = ','.join(preferences['genres'][:2])
+        
+        response = requests.get(
+            SPOTIFY_RECOMMENDATIONS_URL,
+            params=params,
+            headers={'Authorization': f'Bearer {access_token}'}
+        )
+        response.raise_for_status()
+        
+        tracks = response.json().get('tracks', [])
+        return [{'spotifyId': track['id']} for track in tracks]
+        
+    except Exception as e:
+        logger.error(f"Failed to get recommendations: {str(e)}")
+        return []
+
 @app.route('/api/camera', methods=['POST'])
 def camera():
     try:
@@ -31,24 +161,30 @@ def camera():
         
         if not data or 'image' not in data:
             return jsonify({'success': False, 'error': 'Image data is missing'}), 400
+            
+        # Get emotion from image
         emotion = get_emotion_from_picture(data)
         if not emotion:
             return jsonify({'success': False, 'error': 'Failed to analyze image'}), 500
 
-
+        # Get Spotify access token
         access_token = get_access_token()
+        
+        # Get user preferences or use defaults
+        preferences = data.get('preferences', {
+            'genres': [],
+            'moodPreference': 'complement',
+            'targetEmotion': None
+        })
 
-        response = requests.get(SPOTIFY_API_URL, params={
-            'q': emotion,
-            'type': 'track',
-            'limit': 10
-        }, headers={'Authorization': f'Bearer {access_token}'})
-
-        songs = response.json().get('tracks', {}).get('items', [])
-        results = [{
-            'spotifyId': song["id"]
-        } for song in songs]
-        return jsonify(results)
+        # Get recommendations
+        results = get_recommendations(emotion, preferences, access_token)
+        
+        if not results:
+            return jsonify({'success': False, 'error': 'Failed to get recommendations'}), 500
+            
+        return jsonify({'success': True, 'results': results})
+        
     except Exception as e:
         logger.error(f"Error processing request: {str(e)}")
         return jsonify({'success': False, 'error': str(e)}), 500
