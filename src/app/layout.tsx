@@ -26,6 +26,7 @@ const gamjaFlower = Gamja_Flower({
   display: 'swap',
   variable: '--font-gamja-flower',
 });
+
 export const metadata: Metadata = {
   title: "Music",
   description: "best music app oat",
@@ -39,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-black bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] ${geistSans.variable} ${geistMono.variable}  ${merriweather.className} antialiased`}
+        className={`bg-black bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] ${geistSans.variable} ${geistMono.variable} ${merriweather.variable} ${gamjaFlower.variable} ${merriweather.className} antialiased`}
       >
         {children}
       </body>

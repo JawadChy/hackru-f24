@@ -1,12 +1,11 @@
 import Image from "next/image";
-import { useEffect } from "react";
 
 export default function Homer (){
     return(
         <main className="min-h-screen bg-homer-color h-full z-50">
             <header className="h-full z-50">
                 <h1 className="flex text-8xl align-bottom font-bold justify-end py-5 justify-center h-full">
-                    Mr.X's Web Page*
+                    Mr.X&apos;s Web Page*
                 </h1>
             </header>
             <div className="flex justify-cente z-50">

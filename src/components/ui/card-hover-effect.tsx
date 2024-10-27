@@ -2,7 +2,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Suspense, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ThreeDots } from "react-loader-spinner";
-import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
 import { ArrowUp } from "lucide-react";
 
 interface Item {

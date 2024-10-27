@@ -5,11 +5,15 @@ import socket
 from utils import get_emotion_from_picture, get_access_token
 import requests
 
+from transit_service import TransitDataService
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
+
+transit_service = TransitDataService()
 
 def is_port_in_use(port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -153,6 +157,44 @@ def get_recommendations(emotion, preferences, access_token):
     except Exception as e:
         logger.error(f"Failed to get recommendations: {str(e)}")
         return []
+    
+@app.route('/api/nearby-stops', methods=['GET'])
+def nearby_stops():
+    try:
+        lat = float(request.args.get('lat'))
+        lon = float(request.args.get('lon'))
+        radius = float(request.args.get('radius', 5.0))
+        
+        stops = transit_service.get_nearby_stops(lat, lon, radius)
+        return jsonify({'success': True, 'stops': stops})
+    except Exception as e:
+        logging.error(f"Error getting nearby stops: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/departures/<int:stop_id>', methods=['GET'])
+def departures(stop_id):
+    try:
+        limit = int(request.args.get('limit', 5))
+        departures = transit_service.get_next_departures(stop_id, limit)
+        return jsonify({'success': True, 'departures': departures})
+    except Exception as e:
+        logging.error(f"Error getting departures: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/route', methods=['GET'])
+def find_route():
+    try:
+        from_stop = int(request.args.get('from'))
+        to_stop = int(request.args.get('to'))
+        
+        route = transit_service.find_route(from_stop, to_stop)
+        if route is None:
+            return jsonify({'success': False, 'error': 'No route found'}), 404
+            
+        return jsonify({'success': True, 'route': route})
+    except Exception as e:
+        logging.error(f"Error finding route: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 @app.route('/api/camera', methods=['POST'])
 def camera():
@@ -188,6 +230,8 @@ def camera():
     except Exception as e:
         logger.error(f"Error processing request: {str(e)}")
         return jsonify({'success': False, 'error': str(e)}), 500
+    
+    
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5328)

@@ -2,27 +2,27 @@
 import { useCallback, useEffect, useState } from "react";
 import CameraBucket from "@/components/ui/camera-bucket";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
-import { Music2, Camera, Sparkles, Smile, Frown, Heart, BadgeCheck } from "lucide-react";
+import { Music2, Camera, Sparkles, BadgeCheck } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight";
 
-interface Face {
-  position: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-  emotions: {
-    angry: number;
-    disgust: number;
-    fear: number;
-    happy: number;
-    sad: number;
-    surprise: number;
-    neutral: number;
-  };
-  dominant_emotion: string;
-}
+// interface Face {
+//   position: {
+//     x: number;
+//     y: number;
+//     width: number;
+//     height: number;
+//   };
+//   emotions: {
+//     angry: number;
+//     disgust: number;
+//     fear: number;
+//     happy: number;
+//     sad: number;
+//     surprise: number;
+//     neutral: number;
+//   };
+//   dominant_emotion: string;
+// }
 
 interface Item {
   spotifyId: string;
@@ -51,12 +51,12 @@ const genres = [
   { id: 'indie', name: 'Indie' },
 ];
 
-const emotions = [
-  { id: 'happy', name: 'Happy', icon: Smile },
-  { id: 'sad', name: 'Sad', icon: Frown },
-  { id: 'energetic', name: 'Energetic', icon: Music2 },
-  { id: 'calm', name: 'Calm', icon: Heart },
-];
+// const emotions = [
+//   { id: 'happy', name: 'Happy', icon: Smile },
+//   { id: 'sad', name: 'Sad', icon: Frown },
+//   { id: 'energetic', name: 'Energetic', icon: Music2 },
+//   { id: 'calm', name: 'Calm', icon: Heart },
+// ];
 
 export default function Listen() {
     const [emotionData, setEmotionData] = useState< Item[] | null>(null);
