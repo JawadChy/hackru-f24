@@ -6,7 +6,7 @@ We do all the work for you to get you the best songs to fit your mood, all you h
 
 <p align="center">
   <a href="" target="_blank">
-  <img src="./public/favicon-32-32.png" width="300" height="300" alt="Feelin it Logo" />
+  <img src="./public/icon.png" width="300" height="300" alt="Feelin it Logo" />
   </a>
 </p>
 
@@ -25,7 +25,7 @@ Thank you for being interested in our project, these are the steps to start usin
 1. **Clone the repository**:
 
 ```bash
-   git clone https://github.com/qReReRe/Re.git
+   git clone https://github.com/JawadChy/hackru-f24.git
 ```
 
 2. **Install dependencies**:
