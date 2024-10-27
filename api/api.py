@@ -1,34 +1,49 @@
-# api/api.py
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import cv2
 import numpy as np
 from deepface import DeepFace
 import base64
-from PIL import Image
-import io
+import logging
+import socket
 
-app = FastAPI()
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = Flask(__name__)
+CORS(app)
 
-# Load face cascade classifier
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+def is_port_in_use(port):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        try:
+            s.bind(('localhost', port))
+            return False
+        except socket.error:
+            return True
 
-@app.post("/api/camera")
-async def camera(request: Request):
+# Test endpoint
+@app.route('/api/test', methods=['GET'])
+def test():
+    return jsonify({'status': 'API is running!'})
+
+# Initialize face cascade classifier
+try:
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    if face_cascade.empty():
+        raise Exception("Error loading face cascade classifier")
+except Exception as e:
+    logger.error(f"Failed to load face cascade classifier: {str(e)}")
+    raise
+
+@app.route('/api/camera', methods=['POST'])
+def camera():
     try:
         # Get JSON data
-        data = await request.json()
+        data = request.get_json()
+        
         if not data or 'image' not in data:
-            return {"success": False, "error": "Image data is missing"}
+            return jsonify({'success': False, 'error': 'Image data is missing'}), 400
         
         # Extract the base64 image string
         base64_image = data['image'].split(",")[1] if "," in data['image'] else data['image']
@@ -37,6 +52,9 @@ async def camera(request: Request):
         image_data = base64.b64decode(base64_image)
         nparr = np.frombuffer(image_data, np.uint8)
         frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        
+        if frame is None:
+            return jsonify({'success': False, 'error': 'Failed to decode image'}), 400
 
         # Convert frame to grayscale for face detection
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -52,7 +70,6 @@ async def camera(request: Request):
             # Analyze emotions
             result = DeepFace.analyze(face_roi, actions=['emotion'], enforce_detection=False)
             
-            # Get emotion data
             emotion_data = result[0]['emotion']
             dominant_emotion = result[0]['dominant_emotion']
             
@@ -71,18 +88,15 @@ async def camera(request: Request):
         _, buffer = cv2.imencode('.jpg', frame)
         img_base64 = base64.b64encode(buffer).decode('utf-8')
 
-        return {
+        return jsonify({
             'success': True,
             'faces': results,
             'annotated_image': f'data:image/jpeg;base64,{img_base64}'
-        }
+        })
 
     except Exception as e:
-        return {
-            'success': False,
-            'error': str(e)
-        }
+        logger.error(f"Error processing request: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    app.run(host='0.0.0.0', port=5328)
