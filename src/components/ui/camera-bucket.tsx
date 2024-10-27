@@ -1,6 +1,6 @@
 'use client';
 
-import { CameraIcon } from "@heroicons/react/24/outline";
+import { ArrowTrendingUpIcon, CameraIcon } from "@heroicons/react/24/outline";
 import { useRef, useState } from "react";
 import { Camera, CameraType } from "react-camera-pro";
 export default function CameraBucket({setImage: setImage}: {setImage: (image: string) => void}){
@@ -41,12 +41,21 @@ export default function CameraBucket({setImage: setImage}: {setImage: (image: st
                     </div>
                 </div>
             </div>
-            {/* Click feedback */}
             {isClicked && (
                 <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 mt-2 p-2 bg-purple-500 text-white text-xs rounded-sm z-90">
                     Done!
                 </div>
             )}
+            <div className="z-20 flex absolute right-0 flex-col -rotate-[32deg] items-center">
+                <ArrowTrendingUpIcon
+                    className={`text-white h-5 w-5 w-full transform -rotate-[80deg]`}
+                />
+                <span
+                    className={`text-center text-sm toon m-0  w-full leading-tight text-white`}
+                >
+                    Take pic!
+                </span>
+            </div>
         </button>
     );
     
