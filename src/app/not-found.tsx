@@ -3,13 +3,13 @@ import { useEffect } from "react";
 
 export default function Homer (){
     return(
-        <main className="min-h-screen bg-homer-color h-full ">
-            <header className="h-full">
+        <main className="min-h-screen bg-homer-color h-full z-50">
+            <header className="h-full z-50">
                 <h1 className="flex text-8xl align-bottom font-bold justify-end py-5 justify-center h-full">
                     Mr.X's Web Page*
                 </h1>
             </header>
-            <div className="flex justify-center">
+            <div className="flex justify-cente z-50">
                 <Image src="/man.gif" alt="Rotating man" width={400} height={500}/>
             </div>
             <div className="toasters">

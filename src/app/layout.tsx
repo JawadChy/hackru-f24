@@ -18,6 +18,7 @@ const merriweather = Merriweather({
   weight: ['300', '400', '700', '900'],
   style: ['normal', 'italic'],
   display: 'swap',
+  variable: '--font-merriweather',
 });
 const gamjaFlower = Gamja_Flower({
   subsets: ['latin'],
@@ -38,11 +39,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${gamjaFlower.className} ${geistSans.variable} ${geistMono.variable}  ${merriweather.className} antialiased`}
+        className={`bg-black bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] ${geistSans.variable} ${geistMono.variable}  ${merriweather.className} antialiased`}
       >
-        {children}
-                {/* Background grid animation */}
-                <div className="h-screen bg-black absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]" />
+          {children}
+          
       </body>
     </html>
   );

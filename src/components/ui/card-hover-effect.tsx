@@ -11,10 +11,10 @@ interface HoverEffectProps {
 }
 
 export const HoverEffect: React.FC<HoverEffectProps> = ({ items }) => {
-  const [circleY, setCircleY] = useState<number>(-50);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
   return (
     <div className={`mt-12 justify-center z-50 flex flex-col relative`}>
+      <h1 className="text-2xl text-purple-800">Recommended Songs</h1>
+      <p className="text-zinc-200 homer">Duration</p>
       <div className="flex flex-col items-center">
         {items.map((item, idx) => (
           <motion.iframe 
@@ -34,12 +34,6 @@ export const HoverEffect: React.FC<HoverEffectProps> = ({ items }) => {
             zIndex: 0,
             transition: { duration: 0.3 },
           }}
-          onMouseEnter={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            setCircleY(rect.top + window.scrollY + rect.height / 2 - 10); 
-            setIsHovered(true); 
-          }}
-          onMouseLeave={() => setIsHovered(false)} 
         />
         
         ))}

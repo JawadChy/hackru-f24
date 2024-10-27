@@ -51,7 +51,7 @@ export default function CameraBucket({setImage: setImage}: {setImage: (image: st
                     className={`text-white h-5 w-5 w-full transform -rotate-[80deg]`}
                 />
                 <span
-                    className={`text-center text-sm toon m-0  w-full leading-tight text-white`}
+                    className={`text-center text-sm cartoon m-0  w-full leading-tight text-white`}
                 >
                     Take pic!
                 </span>
