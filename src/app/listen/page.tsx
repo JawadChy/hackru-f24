@@ -1,30 +1,17 @@
 'use client';
 import CameraBucket from "@/components/ui/camera-bucket"
 import { useCallback, useEffect, useState } from "react";
-import HoverEffect from "@/components/ui/card-hover-effect";
-
+import { HoverEffect } from "@/components/ui/card-hover-effect";
 export default function Listen(){
 
     const mockData = [
         {
-            albumCover: "https://upload.wikimedia.org/wikipedia/en/thumb/9/90/TheMelodicBlueCover.jpeg/220px-TheMelodicBlueCover.jpeg",
-            albumName: "The Melodic Blue",
-            songName: "Family Ties",
-            artist: "Baby Keem",
-            genre: "Rap",
-            duration: "3:45",
-            link: "some shit"
+            spotifyId: "3CmHvyZQQAGkKkTjTBFWN6"
         },
         {
-            albumCover: "https://upload.wikimedia.org/wikipedia/en/thumb/9/90/TheMelodicBlueCover.jpeg/220px-TheMelodicBlueCover.jpeg",
-            albumName: "The Melodic Blue",
-            songName: "Orange Soda",
-            artist: "Baby Keem",
-            genre: "Rap",
-            duration: "2:56",
-            link: "some shit"
+          spotifyId: "7CyPwkp0oE8Ro9Dd5CUDjW"
         }
-    ];
+      ];
     
     const [image, setImage] = useState<string | null>(null);
     const fetchSongsByEmotions = useCallback(async () => {
