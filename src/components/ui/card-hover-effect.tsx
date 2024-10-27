@@ -11,6 +11,11 @@ interface HoverEffectProps {
 }
 
 export const HoverEffect: React.FC<HoverEffectProps> = ({ items }) => {
+  if (!items) {
+    return(<>
+      Upload a picture
+    </>);
+  }
   return (
     <div className={`mt-12 justify-center z-50 flex flex-col relative`}>
       <h1 className="text-2xl text-purple-800">Recommended Songs</h1>

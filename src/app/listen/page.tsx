@@ -22,7 +22,9 @@ interface Face {
   };
   dominant_emotion: string;
 }
-
+interface Item {
+    spotifyId: string;
+  }
 interface EmotionResponse {
   success: boolean;
   faces: Face[];
@@ -30,23 +32,12 @@ interface EmotionResponse {
 }
 
 export default function Listen() {
-    const [emotionData, setEmotionData] = useState<EmotionResponse | null>(null);
-    const [isAnalyzing, setIsAnalyzing] = useState(false);
-
-    const mockData = [
-        {
-            spotifyId: "3CmHvyZQQAGkKkTjTBFWN6"
-        },
-        {
-          spotifyId: "7CyPwkp0oE8Ro9Dd5CUDjW"
-        }
-    ];
+    const [emotionData, setEmotionData] = useState< Item[] | null>(null);
     
     const [image, setImage] = useState<string | null>(null);
 
     const fetchSongsByEmotions = useCallback(async () => {
         try {
-            setIsAnalyzing(true);
             const response = await fetch("/api/camera", {
                 method: "POST",
                 body: JSON.stringify({ image }),
@@ -54,7 +45,6 @@ export default function Listen() {
                     "Content-Type": "application/json"
                 }
             });
-            
             if (!response.ok) {
                 throw new Error(`Error: ${response.statusText}`);
             }
@@ -62,7 +52,6 @@ export default function Listen() {
             const data: EmotionResponse = await response.json();
             setEmotionData(data);
             
-            // Log the emotion data for each detected face
             if (data.faces && data.faces.length > 0) {
                 data.faces.forEach((face, index) => {
                     console.log(`Face ${index + 1} emotions:`, face.emotions);
@@ -73,8 +62,6 @@ export default function Listen() {
             }
         } catch(e) {
             console.error('Error analyzing emotions:', e);
-        } finally {
-            setIsAnalyzing(false);
         }
     }, [image]);
 
@@ -87,7 +74,7 @@ export default function Listen() {
     return(
         <div className="flex flex-col w-full justify-center items-center p-5">
             <CameraBucket setImage={setImage}/>
-            <HoverEffect items={mockData} />
+            <HoverEffect items={emotionData} />
         </div>
     )
 }
