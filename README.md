@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## The Mood of a Person
 
-## Getting Started
+In our day to day, we are constantly bombarded by feelings. Since the moment we have conciousness the sound around us affected who we were and how we felt. Given how important sound is, Feelin it, tries to drive you deeper into your emotions or drive away from others to enhance your life. 
 
-First, run the development server:
+We do all the work for you to get you the best songs to fit your mood, all you have to do is take a picture of how you feel and instantly recommendation will appear  that relate to who you are at that moment.
+
+<p align="center">
+  <a href="" target="_blank">
+  <img src="./public/favicon-32-32.png" width="300" height="300" alt="Feelin it Logo" />
+  </a>
+</p>
+
+The purpose of Feelin It is simply the following:
+
+- **Enhance your experience**
+- **Help you manage your moods as you please**
+- **And of course, find new songs!**
+
+With **Feelin It**, you can act faster in the control and process of your emotions with the help of music.
+
+## How to get started
+
+Thank you for being interested in our project, these are the steps to start using it:
+
+1. **Clone the repository**:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   git clone https://github.com/qReReRe/Re.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install dependencies**:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Run the development server**:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+  npm run dev
+```
